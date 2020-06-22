@@ -1,5 +1,6 @@
 import marcas.*
 import jarras.*
+import carpas.*
 
 class Persona {
 	
@@ -13,18 +14,31 @@ class Persona {
 	method cantidadJarrasCompradas() {return jarrasCompradas.size()}
 	method totalDeAlcohol() {return jarrasCompradas.sum({j =>j.contenidoAlcoholico()})}
 	method estaEbria() {return self.totalDeAlcohol() * self.peso() > self.nivelDeAguante()}	
+	method leGusta(unaCerveza) {return true}
+	
+	method quiereEntrar(unaCarpa) { return self.leGusta(unaCarpa.marcaVendida()) and 
+		self.leGustaMusicaTradicional() == unaCarpa.tieneBanda() }
+		
+	method ingresoPermitido(unaCarpa) {return self.quiereEntrar(unaCarpa) 
+		and unaCarpa.puedeIngresar(self) }
+		
+	method ingresarEnCarpa(unaCarpa) {
+		if(self.quiereEntrar(unaCarpa) and  self.ingresoPermitido(unaCarpa))
+		{unaCarpa.efectivizarIngreso(self)}
+		else{throw new Exception (message = "La persona no puede ingresar") } 
+	}
 }
 
 class Belga inherits Persona {
-	method leGusta(unaCerveza) {return unaCerveza.lupulo() > 4 }
+	override method leGusta(unaCerveza) {return unaCerveza.lupulo() > 4 }
 	
 }
 
 class Checo inherits Persona {
-	method leGusta(unaCerveza) {return unaCerveza.graduacion() > 8 }
+	override method leGusta(unaCerveza) {return unaCerveza.graduacion() > 8 }
 	
 }
 
 class Aleman inherits Persona {
-	method leGusta(unaCerveza) {return true}
+	override method quiereEntrar(unaCarpa) {return super(unaCarpa) and unaCarpa.capacidad().even()}
 }

@@ -1,11 +1,11 @@
 import marcas.*
 
 class Jarras{
-	var property capacidad
+	var property litros
 	var property cerveza
 	
 	method contenidoAlcoholico() {
-		return self.capacidad() * (cerveza.graduacion() / 100)
+		return self.litros() * (cerveza.graduacion() / 100)
 	}
 	
 	method marca() = cerveza.marca()
