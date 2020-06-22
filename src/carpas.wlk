@@ -16,8 +16,18 @@ class Carpas {
 	
 	method servirJarra(unaPersona, tamanio) {
 		if(self.personasDentro().contains(unaPersona)) 
-		{ unaPersona.comprarJarra(new Jarras(litros=tamanio,cerveza=marcaVendida)) }
-		else {throw new Exception (message = "La persona no esta en la carpa")}	
+		{ unaPersona.comprarJarra([new Jarras(litros=tamanio,cerveza=marcaVendida)]) }
+		else {self.error("La persona no esta en la carpa")}	
 	}
 	
+	method ebriosEmpedernidos() {
+		var ebrios = personasDentro.filter({p => p.estaEbria()})
+		return ebrios.count({e => self.masDeUnLitro(e)})
+	}
+	
+	method masDeUnLitro(persona) {return persona.jarrasCompradas().all({j=>j.litros() > 1})}
+	
+	method esPatriota() {}
 }
+
+	

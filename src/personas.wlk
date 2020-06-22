@@ -10,6 +10,7 @@ class Persona {
 	var jarrasCompradas = []
 	
 	method comprarJarra (unaJarra) {jarrasCompradas.addAll(unaJarra)}
+	method jarrasCompradas() {return jarrasCompradas}
 	
 	method cantidadJarrasCompradas() {return jarrasCompradas.size()}
 	method totalDeAlcohol() {return jarrasCompradas.sum({j =>j.contenidoAlcoholico()})}
@@ -25,7 +26,7 @@ class Persona {
 	method ingresarEnCarpa(unaCarpa) {
 		if(self.quiereEntrar(unaCarpa) and  self.ingresoPermitido(unaCarpa))
 		{unaCarpa.efectivizarIngreso(self)}
-		else{throw new Exception (message = "La persona no puede ingresar") } 
+		else{self.error("La persona no puede ingresar") } 
 	}
 }
 
