@@ -13,8 +13,7 @@ describe "parte 2"{
 	
 	const carpa1 = new Carpas(capacidad=2,tieneBanda=true,marcaVendida=corona)
 	const carpa2 = new Carpas(capacidad=2,tieneBanda=false,marcaVendida=heineken)
-	//const carpa3
-	//const carpa4
+	
 	
 	fixture{
 		graduacionMundial.graduacionReglamentaria(9)
