@@ -28,18 +28,24 @@ class Persona {
 		{unaCarpa.efectivizarIngreso(self)}
 		else{self.error("La persona no puede ingresar") } 
 	}
-}
+	
+	method nacionalidad() {return "laNacionalidad"}
+	
+	method esPatriota() {return self.jarrasCompradas().all({j => j.cerveza().paisOrigen() == self.nacionalidad()}) } 
+	}
+
 
 class Belga inherits Persona {
 	override method leGusta(unaCerveza) {return unaCerveza.lupulo() > 4 }
-	
+	override method nacionalidad() {return "Belgica"}
 }
 
 class Checo inherits Persona {
 	override method leGusta(unaCerveza) {return unaCerveza.graduacion() > 8 }
-	
+	override method nacionalidad() {return "Republica Checa"}
 }
 
 class Aleman inherits Persona {
 	override method quiereEntrar(unaCarpa) {return super(unaCarpa) and unaCarpa.capacidad().even()}
+	override method nacionalidad() {return "Alemania"}
 }

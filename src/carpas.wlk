@@ -27,7 +27,7 @@ class Carpas {
 	
 	method masDeUnLitro(persona) {return persona.jarrasCompradas().all({j=>j.litros() > 1})}
 	
-	method esPatriota() {}
+	
 }
 
 	

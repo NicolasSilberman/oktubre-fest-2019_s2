@@ -1,0 +1,63 @@
+import marcas.*
+import jarras.*
+import personas.*
+import carpas.*
+
+describe "parte 2"{
+	const corona = new CervezaRubia(lupulo=4,graduacion=8,paisOrigen="Mexico",marca="Corona")
+	const heineken = new CervezaRoja(lupulo=5,paisOrigen="Belgica",marca="Heineken")
+	
+	const belga = new Belga(peso=70,nivelDeAguante=10,leGustaMusicaTradicional=false)
+	const checo = new Checo(peso=80,nivelDeAguante=10,leGustaMusicaTradicional=true)
+	const aleman = new Aleman(peso=65,nivelDeAguante=12,leGustaMusicaTradicional=true)
+	
+	const carpa1 = new Carpas(capacidad=2,tieneBanda=true,marcaVendida=corona)
+	const carpa2 = new Carpas(capacidad=2,tieneBanda=false,marcaVendida=heineken)
+	//const carpa3
+	//const carpa4
+	
+	fixture{
+		graduacionMundial.graduacionReglamentaria(9)
+	}
+	
+	test "carpa 1 permisos"{
+		belga.comprarJarra([new Jarras(litros=2,cerveza=corona)])
+		assert.notThat(belga.quiereEntrar(carpa1))
+		assert.notThat(checo.quiereEntrar(carpa1))
+		assert.that(aleman.quiereEntrar(carpa1))
+		assert.notThat(carpa1.puedeIngresar(belga))
+		assert.that(carpa1.puedeIngresar(checo))
+		assert.that(carpa1.puedeIngresar(aleman))
+		assert.notThat(belga.ingresoPermitido(carpa1))
+		assert.notThat(checo.ingresoPermitido(carpa1))
+		assert.that(aleman.ingresoPermitido(carpa1))
+	}
+	
+	test "carpa 1 dentro"{
+		aleman.ingresarEnCarpa(carpa1)
+		carpa1.servirJarra(aleman,3)
+		assert.equals(1,carpa1.ebriosEmpedernidos())
+		assert.notThat(aleman.esPatriota())
+	}
+	
+	test "carpa 2 permisos"{
+		belga.comprarJarra([new Jarras(litros=0.25,cerveza=heineken)])
+		assert.that(belga.quiereEntrar(carpa2))
+		assert.notThat(checo.quiereEntrar(carpa2))
+		assert.notThat(aleman.quiereEntrar(carpa2))
+		assert.that(carpa2.puedeIngresar(belga))
+		assert.that(carpa2.puedeIngresar(checo))
+		assert.that(carpa2.puedeIngresar(aleman))
+		assert.that(belga.ingresoPermitido(carpa2))
+		assert.notThat(checo.ingresoPermitido(carpa2))
+		assert.notThat(aleman.ingresoPermitido(carpa2))
+	}
+	
+	test "carpa 2 dentro"{
+		belga.ingresarEnCarpa(carpa2)
+		carpa2.servirJarra(belga,1)
+		assert.equals(0,carpa2.ebriosEmpedernidos())
+		assert.that(belga.esPatriota())
+	}
+	
+}
